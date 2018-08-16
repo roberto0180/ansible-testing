@@ -10,5 +10,3 @@ nodes:
    nd_address: 172.16.1.4
  - nd_name: node5
    nd_address: 172.16.1.5
- - nd_name: node6
-   nd_address: 172.16.1.6
