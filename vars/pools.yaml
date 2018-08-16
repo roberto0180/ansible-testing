@@ -4,18 +4,19 @@ pools:
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
-      - pl_member_name: node1
-      - pl_member_name: node2
+    pl_member_name: 
+      - node1
+      - node2
   - pl_name: pool2_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
-      - pl_member_name: node3
-      - pl_member_name: node4
+      - node3
+      - node4
   - pl_name: pool3_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
-      - pl_member_name: node5
-      - pl_member_name: node6
+      - node5
+      - node6
       
