@@ -1,0 +1,20 @@
+      - pl_member_name: node1
+        pl_member_address: 172.16.1.1
+      - pl_member_name: node2
+        pl_member_address: 172.16.1.2
+  - pl_name: pool2_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - pl_member_name: node3
+        pl_member_address: 172.16.1.3
+      - pl_member_name: node4
+        pl_member_address: 172.16.1.4
+  - pl_name: pool3_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - pl_member_name: node5
+        pl_member_address: 172.16.1.5
+      - pl_member_name: node6
+        pl_member_address: 172.16.1.6
