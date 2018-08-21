@@ -4,18 +4,18 @@ pools:
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node: 
-      - "172.16.1.1"
-      - "172.16.1.2"
+      - 172.16.1.1
+      - 172.16.1.2
   - pl_name: pool2_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
-      - "172.16.1.3"
-      - "172.16.1.4"
+      - 172.16.1.3
+      - 172.16.1.4
   - pl_name: pool3_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
-      - "172.16.1.5"
-      - "172.16.1.6"
+      - 172.16.1.5
+      - 172.16.1.6
       
