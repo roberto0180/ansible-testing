@@ -1,0 +1,74 @@
+---
+
+- name: "Download github repo and check for changes"
+  hosts: localhost
+  gather_facts: true
+  tasks: 
+    - name: "Cloning github"
+      git:
+        repo: git@github.com:roberto0180/ansible-testing.git
+        version: master
+        dest: opt/
+        accept_hostkey: yes
+      # ssh-agent doesn't allow key to pass through remote sudo commands.
+      become: no
+
+- name: "Update F5 configuration"
+  hosts: lab
+  connection: local
+  vars_files:
+    - opt/vars/pools.yaml
+    - opt/vars/nodes.yaml
+    - opt/vars/vips.yaml
+
+  vars_prompt:
+    - name: "username"
+      prompt: "Enter BIG-IP username"
+      private: yes
+    - name: "password"
+      prompt: "Enter BIG-IP password"
+      private: yes
+  
+  environment:
+    F5_SERVER: "{{ inventory_hostname }}"
+    F5_USER: "{{ username }}"
+    F5_PASSWORD: "{{ password }}"
+    F5_VALIDATE_CERTS: "false"
+    F5_SERVER_PORT: 443
+
+  vars:
+    - ansible_host: localhost
+    - ansible_python_interpreter: /Users/roberto.edgar/Downloads/f5-ansible/f5/bin/python
+
+  tasks:
+    - name: Adjust virtual server
+      bigip_virtual_server:
+        name: "{{ item.vs_name }}"
+        destination: "{{ item.vs_ip }}"
+        port: "{{ item.vs_port }}"
+        snat: "{{ item.vs_snat }}"
+      with_items:
+        "{{ virtuals }}"
+
+    - name: Adjust a pool
+      bigip_pool:
+        name: "{{ item.pl_name }}"
+        monitors: "{{ item.pl_monitor }}"
+      with_items:
+        "{{ pools }}"
+
+    - name: Add nodes
+      bigip_node:
+        name: "{{ item.nd_name }}"
+        host: "{{ item.nd_address }}"
+      with_items:
+        "{{ nodes }}"
+
+    - name: Add nodes to pool
+      bigip_pool_member:
+        pool: "{{ item.0.pl_name }}"
+        host: "{{ item.1 }}"
+        port: "{{ item.0.pl_members_port }}"
+      with_subelements:
+        - "{{ pools }}"
+        - pl_members_node
