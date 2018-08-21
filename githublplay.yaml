@@ -8,7 +8,7 @@
       git:
         repo: git@github.com:roberto0180/ansible-testing.git
         version: master
-        dest: opt/
+        dest: tmp/
         accept_hostkey: yes
       # ssh-agent doesn't allow key to pass through remote sudo commands.
       become: no
@@ -17,10 +17,10 @@
   hosts: lab
   connection: local
   vars_files:
-    - opt/vars/pools.yaml
-    - opt/vars/nodes.yaml
-    - opt/vars/vips.yaml
-    - opt/vars/clientssl_profiles.yaml
+    - tmp/opt/vars/pools.yaml
+    - tmp/opt/vars/nodes.yaml
+    - tmp/opt/vars/vips.yaml
+    - tmp/opt/vars/clientssl_profiles.yaml
 
   vars_prompt:
     - name: "username"
@@ -66,9 +66,9 @@
       bigip_profile_client_ssl:
         provider: "{{ provider }}"
         name: "{{ item.cssl_pr_name }}"
-        parent: "{{ cssl_pr_parent_pr }}"
-        ciphers: "{{ cssl_pr_ciphers }}"
-        state: "{{ cssl_pr_state}}"
+        ciphers: "{{ item.cssl_pr_ciphers }}"
+        parent: "{{ item.cssl_pr_parent_pr }}"
+        state: "{{ item.cssl_pr_state}}"
       with_items:
         "{{ clientssl_profiles }}"
 
