@@ -48,7 +48,7 @@
         destination: "{{ item.vs_ip }}"
         port: "{{ item.vs_port }}"
         snat: "{{ item.vs_snat }}"
-        state: "{{ vs_state }}"
+        state: "{{ item.vs_state }}"
       with_items:
         "{{ virtuals }}"
 
