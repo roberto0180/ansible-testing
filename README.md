@@ -8,4 +8,4 @@ Before running you need to add your SSH key to GitHub. Download the f5-sdk, pyth
 
 /var/ contains virtual, pool and node info.
 
-Run the playbook running: ansible-playbook -i inventory.yaml githublplay.yaml 
+Run the playbook using: ansible-playbook -i inventory.yaml githublplay.yaml 
