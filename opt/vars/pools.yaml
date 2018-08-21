@@ -1,4 +1,10 @@
 ---
+# This file is used to add, remove, edit pool configuration on the load balancer.
+# The information required for each pool is pl_name, pl_monitor, pl_members_port and pl_members_node (not that this is a list of nodes).
+# If you want to use the default Ansible variables for any of these values, then just use "" as the value. However a unique pl_name must be provided.
+# The pl_state value can either be present or absent. If absent, delete the pool if it exists and not assigned to a virtual server. If present, creates the pool and checks configuration is correct.
+# More info can be found: https://docs.ansible.com/ansible/2.6/modules/bigip_pool_module.html
+#
 pools:
   - pl_name: pool1_80
     pl_monitor: tcp
@@ -6,16 +12,19 @@ pools:
     pl_members_node: 
       - node1
       - node2
+    pl_state: present
   - pl_name: pool2_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
       - node3
       - node4
+    pl_state: present
   - pl_name: pool3_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
       - node5
       - node6
+    pl_state: present
       
