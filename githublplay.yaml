@@ -38,6 +38,7 @@
         server_port: 443
         user: "{{ username }}"
         password: "{{ password }}"
+    - state: "present"
 
   tasks:
     - name: Adjust virtual server
@@ -47,6 +48,7 @@
         destination: "{{ item.vs_ip }}"
         port: "{{ item.vs_port }}"
         snat: "{{ item.vs_snat }}"
+        state: "{{ state }}"
       with_items:
         "{{ virtuals }}"
 
@@ -55,6 +57,7 @@
         provider: "{{ provider }}"
         name: "{{ item.pl_name }}"
         monitors: "{{ item.pl_monitor }}"
+        state: "{{ state }}"
       with_items:
         "{{ pools }}"
 
@@ -70,8 +73,10 @@
       bigip_pool_member:
         provider: "{{ provider }}"
         pool: "{{ item.0.pl_name }}"
-        host: "{{ item.1 }}"
+        name: "{{ item.1 }}"
         port: "{{ item.0.pl_members_port }}"
+        state: "{{ state }}"
       with_subelements:
         - "{{ pools }}"
         - pl_members_node
+      when: state == "present"
