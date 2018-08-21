@@ -20,7 +20,6 @@
     - opt/vars/pools.yaml
     - opt/vars/nodes.yaml
     - opt/vars/vips.yaml
-    - opt/vars/clientssl_profiles.yaml
 
   vars_prompt:
     - name: "username"
@@ -49,11 +48,11 @@
         destination: "{{ item.vs_ip }}"
         port: "{{ item.vs_port }}"
         snat: "{{ item.vs_snat }}"
-        state: "{{ item.vs_state }}"
+        state: "{{ vs_state }}"
       with_items:
         "{{ virtuals }}"
 
-    - name: Adjust pools
+    - name: Adjust a pool
       bigip_pool:
         provider: "{{ provider }}"
         name: "{{ item.pl_name }}"
@@ -61,16 +60,6 @@
         state: "{{ state }}"
       with_items:
         "{{ pools }}"
-
-    - name: Adjust client SSL profiles
-      bigip_profile_client_ssl:
-        provider: "{{ provider }}"
-        name: "{{ item.cssl_pr_name }}"
-        parent: "{{ cssl_pr_parent_pr }}"
-        ciphers: "{{ cssl_pr_ciphers }}"
-        state: "{{ cssl_pr_state}}"
-      with_items:
-        "{{ clientssl_profiles }}"
 
     - name: Add nodes
       bigip_node:

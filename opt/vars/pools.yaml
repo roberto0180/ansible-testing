@@ -1,0 +1,21 @@
+---
+pools:
+  - pl_name: pool1_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node: 
+      - node1
+      - node2
+  - pl_name: pool2_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - node3
+      - node4
+  - pl_name: pool3_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - node5
+      - node6
+      
