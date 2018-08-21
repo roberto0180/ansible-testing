@@ -13,7 +13,15 @@
 
 ### To use this tool you need to:
 
-Before running you need to add your SSH key to GitHub. Download the f5-sdk, python, bigsudds.
+1) Add your SSH Key to GitHub if it is not already. (See: https://help.github.com/articles/connecting-to-github-with-ssh/)
+
+2) Download virtualenv by running the command `easy_install virtualenv`
+
+3) Once virtualenv is installed make a new directory to create a virtualenv within. `mkdir ~/f5-ansible`, `cd ~/f5-ansible`, `virtualenv f5-ansible`.
+
+4) Spin up your newly created virtualenv. `source bin/active`
+
+Download the f5-sdk, python, bigsudds.
 
 Clone the ansible-testing repo.
 
