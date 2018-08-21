@@ -28,8 +28,18 @@
 `pip install python`
 `pip install bigsuds`
 
-Clone the ansible-testing repo.
+6) Fork this repository and clone it to your local machine by performing a `git clone`.
 
-/var/ contains virtual, pool and node info.
+7) Add the necessary ammendments to the respective /opt/var files and submit a PR to have your changes reviewed.
 
-Run the playbook using: ansible-playbook -i inventory.yaml githublplay.yaml 
+8) Once reviewed and merged, delete the previously forked respository and any previous git clone from your virtualenv.
+
+9) Fork the repository once again and clone it to your local machine by performing a `git clone`.
+
+10) Navigate to the directory ansible testing by entering `cd ansible-testing`
+
+11) Run the playbook in dry run mode using the command: `ansible-playbook -i inventory.yaml githubplay.yaml --check`
+
+12) Verify that any changes that Ansible is suggesting will be made are in fact correct and that no errors are output.
+
+13) Once satisfied that they are, run the playbook normally using the command: `ansible-playbook -i inventory.yaml githubplay.yaml`
