@@ -3,6 +3,7 @@
 # The information required for each virtual server is vs_name, vs_ip, vs_port, vs_snat and vs_state.
 # If you want to use the default Ansible variables for any of these values, then just use "" as the value. However a unique vs_name must be provided.
 # The vs_state value can either be present, absent, enabled or disabled. If absent, delete the virtual server if it exists. If present creates the virtual server and enables it. If enabled, enable the virtual server if it exists. If disabled, create the virtual server if needed, and set state to disabled.
+# More info can be found: https://docs.ansible.com/ansible/2.6/modules/bigip_virtual_server_module.html
 #
 virtuals:
   - vs_name: virtual1_80
