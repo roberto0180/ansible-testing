@@ -1,14 +1,25 @@
 ---
+# This file is used to add, remove, edit pool configuration on the load balancer.
+# The information required for each pool is nd_name, nd_address and nd_state.
+# If you want to use the default Ansible variables for any of these values, then just use "" as the value. However a unique pl_name must be provided.
+# The nd_state value can either be present, absent, enabled, disabled or offline. Specifies the current state of the node. enabled (All traffic allowed), specifies that system sends traffic to this node regardless of the node's state. disabled (Only persistent or active connections allowed), Specifies that the node can handle only persistent or active connections. offline (Only active connections allowed), Specifies that the node can handle only active connections. In all cases except absent, the node will be created if it does not yet exist
+#
 nodes:
  - nd_name: node1
    nd_address: 172.16.1.1
+   nd_state: present
  - nd_name: node2
    nd_address: 172.16.1.2
+   nd_state: present
  - nd_name: node3
    nd_address: 172.16.1.3
+   nd_state: present
  - nd_name: node4
    nd_address: 172.16.1.4
+   nd_state: present
  - nd_name: node5
    nd_address: 172.16.1.5
+   nd_state: present
  - nd_name: node6
    nd_address: 172.16.1.6
+   nd_state: present
