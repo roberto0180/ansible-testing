@@ -19,9 +19,14 @@
 
 3) Once virtualenv is installed make a new directory to create a virtualenv within. `mkdir ~/f5-ansible`, `cd ~/f5-ansible`, `virtualenv f5-ansible`.
 
-4) Spin up your newly created virtualenv. `source bin/active`
+4) Spin up your newly created virtualenv. `source bin/f5-ansible/activate`
 
-Download the f5-sdk, python, bigsudds.
+5) Download pip (if not installed already), f5-sdk, python and bigsuds.
+
+`easy_install pip`
+`pip install f5-sdk`
+`pip install python`
+`pip install bigsuds`
 
 Clone the ansible-testing repo.
 
