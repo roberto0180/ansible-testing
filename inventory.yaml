@@ -1,2 +1,3 @@
+#This file contains the IP addresses of the load balancers. At the present moment, during development, only the lab load balancer exists.
 [lab]
 10.128.1.145
