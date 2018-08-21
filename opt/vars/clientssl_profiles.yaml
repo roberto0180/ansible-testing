@@ -1,5 +1,10 @@
 ---
-
+# This file is used to add, remove, edit client-ssl profile configuration on the load balancer.
+# The information required for each client-ssl profile is cssl_pr_name, cssl_pr_parent_pr, cssl_pr_ciphers, and cssl_pr_state
+# If you want to use the default Ansible variables for any of these values, then just use "" as the value. However a unique cssl_pr_name must be provided.
+# The cssl_pr_state value can either be present or absent. When present, ensures that the profile exists. When absent, ensures the profile is removed.
+# More info can be found here: https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/bigip_profile_client_ssl_module.html
+#
 clientssl_profiles:
   - cssl_pr_name: smfc-secure-2018
     cssl_pr_parent_pr: "/Common/clientssl"
