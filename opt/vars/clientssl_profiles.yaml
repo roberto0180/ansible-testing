@@ -14,15 +14,15 @@ clientssl_profiles:
     cssl_pr_parent_pr: "/Common/smfc-secure-2018"
     cssl_pr_ciphers: ""
     cssl_pr_state: present
-  - cssl_pr_name: tetsprofile1
+  - cssl_pr_name: testprofile1
     cssl_pr_parent_pr: "/Common/smfc-secure-current"
     cssl_pr_ciphers: ""
     cssl_pr_state: present
-  - cssl_pr_name: tetsprofile2     
+  - cssl_pr_name: testprofile2     
     cssl_pr_parent_pr: "/Common/smfc-secure-current"
     cssl_pr_ciphers: ""
     cssl_pr_state: present
-  - cssl_pr_name: tetsprofile2     
+  - cssl_pr_name: testprofile2     
     cssl_pr_parent_pr: "/Common/smfc-secure-current"
     cssl_pr_ciphers: ""
     cssl_pr_state: present
