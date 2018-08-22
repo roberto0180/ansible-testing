@@ -42,6 +42,14 @@
     - state: "present"
 
   tasks:
+    - name: Save config, SCF and UCS
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - save /sys config
+          - save /sys config file "{{ filename }}".scf no-passphrase
+          - save /sys ucs "{{ filename }}".ucs
+
     - name: Adjust virtual server
       bigip_virtual_server:
         provider: "{{ provider }}"
@@ -91,3 +99,9 @@
         - "{{ pools }}"
         - pl_members_node
       when: state == "present"
+
+    - name: Save config
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - save /sys config
