@@ -74,9 +74,18 @@
       bigip_profile_client_ssl:
         provider: "{{ provider }}"
         name: "{{ item.cssl_pr_name }}"
-        ciphers: "{{ item.cssl_pr_ciphers }}"
+        ciphers: "{{ item.cssl_pr_ciphers|default(omit) }}"
         parent: "{{ item.cssl_pr_parent_pr }}"
         state: "{{ item.cssl_pr_state}}"
+      with_items:
+        "{{ clientssl_profiles }}"
+
+    - name: Modify profiles to use inherited ciphers
+      bigip_command:
+        provider: "{{ provider }}"
+        commands:
+          - modify ltm profile client-ssl "{{ item.cssl_pr_name }}" ciphers default-value  
+      when: item.cssl_pr_ciphers is not defined
       with_items:
         "{{ clientssl_profiles }}"
 
