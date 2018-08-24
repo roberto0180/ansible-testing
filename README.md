@@ -38,8 +38,8 @@
 
 10) Navigate to the directory ansible testing by entering `cd ansible-testing`
 
-11) Run the playbook in dry run mode using the command: `ansible-playbook -i inventory.yaml githubplay.yaml --check`
+11) Run the playbook in dry run mode using the command: `ansible-playbook -i inventory.yaml githubplay.yaml -e "filename=<username>-<case_number>" --check`. For example: `ansible-playbook -i inventory.yaml githubplay.yaml -e "filename=redgar-0123456" --check`
 
 12) Verify that any changes that Ansible is suggesting will be made are in fact correct and that no errors are output.
 
-13) Once satisfied that they are, run the playbook normally using the command: `ansible-playbook -i inventory.yaml githubplay.yaml`
+13) Once satisfied that they are, run the playbook normally using the command: `ansible-playbook -i inventory.yaml githubplay.yaml -e "filename=<username>-<case_number>"`
