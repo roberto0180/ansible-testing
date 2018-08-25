@@ -60,6 +60,9 @@
         "{{ pools }}"
 
     - name: Adjust client SSL profiles
+      #Caveat with this task in 2.6. If no cipher is provided, default behaviour is to use the DEFAULT cipher string instead of inheriting from parent. This is fixed in 2.7.
+      #The following task fixes this by running the bigip_command to revert applicable profiles to inherit their ciphers to the parent profile. The command only works on F5's running 11.6.0 and later.
+      #Please note this will not undo changes to ciphers of existing profiles if no ciphers are defined for profile in GitHub.
       bigip_profile_client_ssl:
         provider: "{{ provider }}"
         name: "{{ item.cssl_pr_name }}"
