@@ -16,6 +16,18 @@ virtuals:
     vs_irules:
       - _sys_https_redirect
     vs_state: present
+  - vs_name: virtual1_443
+    vs_ip: 1.1.1.1
+    vs_port: 443
+    vs_snat: automap
+    vs_profiles:
+      - http
+      - tcp
+      - name: testprofile1
+        context: client-side
+    vs_irules:
+      - _sys_https_redirect
+    vs_state: present
   - vs_name: virtual2_80
     vs_ip: 1.1.1.2
     vs_port: 80
