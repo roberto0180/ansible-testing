@@ -8,7 +8,7 @@
 virtuals:
   - vs_name: virtual1_80
     vs_type: standard
-    vs_ip: 1.1.1.10
+    vs_ip: 1.1.1.1
     vs_port: 80
     vs_snat: automap
     vs_profiles:
