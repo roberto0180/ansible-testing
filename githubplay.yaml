@@ -50,20 +50,6 @@
           - save /sys config file "{{ filename }}".scf no-passphrase
           - save /sys ucs "{{ filename }}".ucs
 
-    - name: Adjust virtual server
-      bigip_virtual_server:
-        provider: "{{ provider }}"
-        name: "{{ item.vs_name }}"
-        type: "{{ item.vs_type }}"
-        destination: "{{ item.vs_ip }}"
-        port: "{{ item.vs_port }}"
-        snat: "{{ item.vs_snat }}"
-        profiles: "{{ item.vs_profiles | default(omit) }}"
-        irules: "{{ item.vs_irules | default(omit) }}"
-        state: "{{ item.vs_state }}"
-      with_items:
-        - "{{ virtuals }}"
-
     - name: Adjust pools
       bigip_pool:
         provider: "{{ provider }}"
@@ -111,6 +97,20 @@
         - "{{ pools }}"
         - pl_members_node
       when: state == "present"
+
+    - name: Adjust virtual server
+      bigip_virtual_server:
+        provider: "{{ provider }}"
+        name: "{{ item.vs_name }}"
+        type: "{{ item.vs_type }}"
+        destination: "{{ item.vs_ip }}"
+        port: "{{ item.vs_port }}"
+        snat: "{{ item.vs_snat }}"
+        profiles: "{{ item.vs_profiles | default(omit) }}"
+        irules: "{{ item.vs_irules | default(omit) }}"
+        state: "{{ item.vs_state }}"
+      with_items:
+        - "{{ virtuals }}"
 
     - name: Save config
       bigip_command:
