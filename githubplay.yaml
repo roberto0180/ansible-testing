@@ -100,7 +100,6 @@
       with_subelements:
         - "{{ pools }}"
         - pl_members_node
-      when: state == "present"
 
     - name: Adjust virtual server
       bigip_virtual_server:
