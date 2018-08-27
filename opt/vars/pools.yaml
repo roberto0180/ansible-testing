@@ -11,7 +11,7 @@ pools:
     pl_members_port: 80
     pl_members_node:
       - name: node1
-        state: absent
+        pl_state: absent
       - name: node2
         state: disabled
     pl_state: present
