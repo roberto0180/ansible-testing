@@ -16,6 +16,8 @@ virtuals:
       - http
       - tcp
     vs_default_persistence_pr: cookie
+    vs_irules:
+      - _sys_https_redirect
     vs_state: present
   - vs_name: virtual1_443
     vs_type: standard
