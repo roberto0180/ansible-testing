@@ -1,124 +1,32 @@
 ---
-
-- name: "Download github repo and check for changes"
-  hosts: localhost
-  gather_facts: true
-  tasks: 
-    - name: "Cloning github"
-      git:
-        repo: git@github.com:roberto0180/ansible-testing.git
-        version: master
-        dest: tmp/
-        accept_hostkey: yes
-      # ssh-agent doesn't allow key to pass through remote sudo commands.
-      become: no
-
-- name: "Update F5 configuration"
-  hosts: lab
-  connection: local
-  vars_files:
-    - tmp/opt/vars/pools.yaml
-    - tmp/opt/vars/nodes.yaml
-    - tmp/opt/vars/vips.yaml
-    - tmp/opt/vars/clientssl_profiles.yaml
-
-  vars_prompt:
-    - name: "username"
-      prompt: "Enter BIG-IP username"
-      private: yes
-    - name: "password"
-      prompt: "Enter BIG-IP password"
-      private: yes
-
-  vars:
-    - ansible_host: localhost
-    - ansible_python_interpreter: /Users/roberto.edgar/Downloads/f5-ansible/f5/bin/python
-    - provider:
-        server: "{{ inventory_hostname }}"
-        validate_certs: no
-        server_port: 443
-        user: "{{ username }}"
-        password: "{{ password }}"
-    - state: "present"
-
-  tasks:
-    - name: Save config, SCF and UCS
-      bigip_command:
-        provider: "{{ provider }}"
-        commands:
-          - save /sys config
-          - save /sys config file "{{ filename }}".scf no-passphrase
-          - save /sys ucs "{{ filename }}".ucs
-
-    - name: Adjust pools
-      bigip_pool:
-        provider: "{{ provider }}"
-        name: "{{ item.pl_name }}"
-        monitors: "{{ item.pl_monitor }}"
-        state: "{{ state }}"
-      with_items:
-        "{{ pools }}"
-
-    - name: Adjust client SSL profiles
-      #Caveat with this task in 2.6. If no cipher is provided, default behaviour is to use the DEFAULT cipher string instead of inheriting from parent. This is fixed in 2.7.
-      #The following task fixes this by running the bigip_command to revert applicable profiles to inherit their ciphers to the parent profile. The command only works on F5's running 11.6.0 and later.
-      #Please note this will not undo changes to ciphers of existing profiles if no ciphers are defined for profile in GitHub.
-      bigip_profile_client_ssl:
-        provider: "{{ provider }}"
-        name: "{{ item.cssl_pr_name }}"
-        ciphers: "{{ item.cssl_pr_ciphers|default(omit) }}"
-        parent: "{{ item.cssl_pr_parent_pr }}"
-        state: "{{ item.cssl_pr_state}}"
-      with_items:
-        "{{ clientssl_profiles }}"
-
-    - name: Modify profiles to use inherited ciphers
-      bigip_command:
-        provider: "{{ provider }}"
-        commands:
-          - modify ltm profile client-ssl "{{ item.cssl_pr_name }}" ciphers default-value  
-      when: item.cssl_pr_ciphers is not defined
-      with_items:
-        "{{ clientssl_profiles }}"
-
-    - name: Add nodes
-      bigip_node:
-        provider: "{{ provider }}"
-        name: "{{ item.nd_name }}"
-        host: "{{ item.nd_address }}"
-      with_items:
-        "{{ nodes }}"
-
-    - name: Add nodes to pool
-      bigip_pool_member:
-        provider: "{{ provider }}"
-        preserve_node: yes
-        pool: "{{ item.0.pl_name }}"
-        name: "{{ item.1.name }}"
-        port: "{{ item.0.pl_members_port }}"
-        state: "{{ item.1.pl_nd_state | default('present') }}"
-      with_subelements:
-        - "{{ pools }}"
-        - pl_members_node
-
-    - name: Adjust virtual server
-      bigip_virtual_server:
-        provider: "{{ provider }}"
-        name: "{{ item.vs_name }}"
-        type: "{{ item.vs_type }}"
-        destination: "{{ item.vs_ip }}"
-        port: "{{ item.vs_port }}"
-        snat: "{{ item.vs_snat }}"
-        pool: "{{ item.vs_pool | default() }}"
-        profiles: "{{ item.vs_profiles | default() }}"
-        irules: "{{ item.vs_irules | default() }}"
-        default_persistence_profile: "{{ item.vs_default_persistence_pr | default() }}"
-        state: "{{ item.vs_state }}"
-      with_items:
-        - "{{ virtuals }}"
-
-    - name: Save config
-      bigip_command:
-        provider: "{{ provider }}"
-        commands:
-          - save /sys config
+# This file is used to add, remove, edit pool configuration on the load balancer.
+# The information required for each pool is pl_name, pl_monitor, pl_members_port and pl_members_node (not that this is a list of nodes).
+# If you want to use the default Ansible variables for any of these values, then just use "" as the value. However a unique pl_name must be provided.
+# The pl_nd_state value can either be present, absent, enabled, disabled, forced_offline. The default is present and enabled. If absent, the node will be removed from the pool. If disabled, the node will be disabled within the pool.
+# The pl_state value can either be present or absent. If absent, delete the pool if it exists and not assigned to a virtual server. If present, creates the pool and checks configuration is correct.
+# More info can be found: https://docs.ansible.com/ansible/2.6/modules/bigip_pool_module.html
+#
+pools:
+  - pl_name: pool1_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - name: node1
+      - name: node2
+    pl_state: present
+  - pl_name: pool2_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - name: node3
+      - name: node4
+        pl_nd_state: disabled
+    pl_state: present
+  - pl_name: pool3_80
+    pl_monitor: tcp
+    pl_members_port: 80
+    pl_members_node:
+      - name: node5
+        pl_nd_state: disabled
+      - name: node6
+    pl_state: present
