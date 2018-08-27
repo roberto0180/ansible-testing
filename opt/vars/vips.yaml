@@ -14,6 +14,7 @@ virtuals:
     vs_profiles:
       - http
       - tcp
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: present
@@ -27,6 +28,7 @@ virtuals:
       - tcp
       - name: testprofile1
         context: client-side
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: present
@@ -38,6 +40,7 @@ virtuals:
     vs_profiles:
       - http
       - tcp
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: present
@@ -49,6 +52,7 @@ virtuals:
     vs_profiles:
       - http
       - tcp
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: present
@@ -60,6 +64,7 @@ virtuals:
     vs_profiles:
       - http
       - tcp
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: present
@@ -71,6 +76,7 @@ virtuals:
     vs_profiles:
       - http
       - tcp
+    vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
     vs_state: absent
