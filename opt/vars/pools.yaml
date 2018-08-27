@@ -10,8 +10,10 @@ pools:
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
+      - name: node2
+        pl_nd_state: absent
       - name: node3
-        pl_nd_state: disabled
+        pl_nd_state: absent
     pl_state: present
   - pl_name: pool2_80
     pl_monitor: tcp
