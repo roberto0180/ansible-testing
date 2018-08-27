@@ -11,6 +11,7 @@ pools:
     pl_members_port: 80
     pl_members_node:
       - name: node3
+        pl_nd_state: disabled
     pl_state: present
   - pl_name: pool2_80
     pl_monitor: tcp
