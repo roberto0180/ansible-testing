@@ -11,9 +11,9 @@ pools:
     pl_members_port: 80
     pl_members_node:
       - name: node1
-        pl_state: absent
+        pl_nd_state: absent
       - name: node2
-        state: disabled
+        pl_nd_state: disabled
     pl_state: present
   - pl_name: pool2_80
     pl_monitor: tcp
@@ -21,14 +21,14 @@ pools:
     pl_members_node:
       - name: node3
       - name: node4
-        state: disabled
+        pl_nd_state: disabled
     pl_state: present
   - pl_name: pool3_80
     pl_monitor: tcp
     pl_members_port: 80
     pl_members_node:
       - name: node5
-        state: disabled
+        pl_nd_state: disabled
       - name: node6
     pl_state: present
       
