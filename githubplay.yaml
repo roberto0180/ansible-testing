@@ -92,10 +92,11 @@
     - name: Add nodes to pool
       bigip_pool_member:
         provider: "{{ provider }}"
+        preserve_node: yes
         pool: "{{ item.0.pl_name }}"
-        name: "{{ item.1 }}"
+        name: "{{ item.1.name }}"
         port: "{{ item.0.pl_members_port }}"
-        state: "{{ state }}"
+        state: "{{ item.1.pl_nd_state | default('present') }}"
       with_subelements:
         - "{{ pools }}"
         - pl_members_node
@@ -112,7 +113,7 @@
         pool: "{{ item.vs_pool | default(omit) }}"
         profiles: "{{ item.vs_profiles | default(omit) }}"
         irules: "{{ item.vs_irules | default(omit) }}"
-        default_persistence_profile: "{{ item.vs_default_persistence_pr | default(omit) }}"
+        default_persistence_profile: "{{ item.vs_default_persistence_pr | default() }}"
         state: "{{ item.vs_state }}"
       with_items:
         - "{{ virtuals }}"
