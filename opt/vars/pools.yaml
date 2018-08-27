@@ -12,8 +12,6 @@ pools:
     pl_members_node:
       - name: node1
         pl_state: absent
-      - name: node2
-        pl_nd_state: enabled
     pl_state: present
   - pl_name: pool2_80
     pl_monitor: tcp
