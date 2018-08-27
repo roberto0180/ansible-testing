@@ -110,9 +110,9 @@
         destination: "{{ item.vs_ip }}"
         port: "{{ item.vs_port }}"
         snat: "{{ item.vs_snat }}"
-        pool: "{{ item.vs_pool | default(omit) }}"
-        profiles: "{{ item.vs_profiles | default(omit) }}"
-        irules: "{{ item.vs_irules | default(omit) }}"
+        pool: "{{ item.vs_pool | default() }}"
+        profiles: "{{ item.vs_profiles | default() }}"
+        irules: "{{ item.vs_irules | default() }}"
         default_persistence_profile: "{{ item.vs_default_persistence_pr | default() }}"
         state: "{{ item.vs_state }}"
       with_items:
