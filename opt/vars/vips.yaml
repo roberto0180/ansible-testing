@@ -28,8 +28,6 @@ virtuals:
     vs_profiles:
       - http
       - tcp
-      - name: testprofile1
-        context: client-side
     vs_default_persistence_pr: cookie
     vs_irules:
       - _sys_https_redirect
