@@ -26,7 +26,8 @@
 `easy_install pip`
 `pip install f5-sdk`
 `pip install python`
-`pip install bigsuds`
+`pip install bigsuds` Not needed for Ansible 2.7
+`pip install netaddr` Not needed for Ansible 2.7
 
 6) Fork this repository and clone it to your local machine by performing a `git clone`.
 
